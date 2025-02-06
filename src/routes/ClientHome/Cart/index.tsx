@@ -10,21 +10,20 @@ const item1: OrderItemDTO = new OrderItemDTO(
   "PC Gamer",
   1200,
   "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg"
-);
+)
+
 const item2: OrderItemDTO = new OrderItemDTO(
   5,
   2,
   "Rails for Dummies",
   100.99,
   "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg"
-);
+)
 
 export default function Cart() {
 
-  const[cart, setCart] = useState<OrderDTO>(cartService.getCart());
-
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
   
-
   return (
     <main>
       <section id="cart-container-section" className="dsc-container">
