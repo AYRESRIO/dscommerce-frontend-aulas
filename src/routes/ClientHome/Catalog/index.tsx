@@ -4,36 +4,33 @@ import CatalogCard from "../../../components/CatalogCard";
 import SearchBar from "../../../components/SearchBar";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
-import * as productService from  '../../../services/product-service'
-
-
-
-
+import * as productService from "../../../services/product-service";
 
 export default function Catalog() {
-
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
-  useEffect(()=> {
-    productService.findAll()
-    .then(response=>{
+  const [productName, setProductName] = useState("");
 
+  useEffect(() => {
+    productService.findPageRequest(0,productName).then((response) => {
       setProducts(response.data.content);
-
     });
+  }, [productName]);
 
+  function handleSearch(searchText: string) {
+    setProductName(searchText);
 
-  }, []);
+  }
 
   return (
     <main>
       <section id="catalog-section" className="dsc-container">
-        <SearchBar />
+        <SearchBar onSearch = {handleSearch} />
 
         <div className="dsc-catalog-cards ds-mb20 dsc-mt20">
-
-          {products.map(product=> <CatalogCard key={product.id} product={product} />)}
-          
+          {products.map((product) => (
+            <CatalogCard key={product.id} product={product} />
+          ))}
         </div>
 
         <ButtonNextPage />
