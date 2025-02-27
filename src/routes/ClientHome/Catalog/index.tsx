@@ -5,6 +5,7 @@ import SearchBar from "../../../components/SearchBar";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product";
 import * as productService from "../../../services/product-service";
+import { hasAnyRoles } from "../../../services/auth-service";
 
 type QueryParams = {
   page: number;
@@ -25,6 +26,8 @@ export default function Catalog() {
   );
 
   useEffect(() => {
+
+    console.log("TESTE", hasAnyRoles([]));
 
     productService.findPageRequest(queryParams.page, queryParams.name).then((response) => {
 
