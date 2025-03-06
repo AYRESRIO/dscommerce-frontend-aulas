@@ -6,10 +6,9 @@ import * as forms from "../../../utils/forms";
 import * as productService from "../../../services/product-service";
 
 export default function ProductForm() {
-
   const params = useParams();
 
-  const isEditing = params.productId !== 'create';
+  const isEditing = params.productId !== "create";
 
   const [formData, setFormData] = useState<any>({
     name: {
@@ -20,11 +19,15 @@ export default function ProductForm() {
       placeholder: "Nome",
     },
     price: {
-      value: "",
+      value: 200.0,
       id: "price",
       name: "price",
       type: "number",
       placeholder: "Preço",
+      validation: function (value: any) {
+        return Number(value) > 0;
+      },
+      message: "Favor informar um valor positivo.",
     },
     imgUrl: {
       value: "",
@@ -36,18 +39,16 @@ export default function ProductForm() {
   });
 
   useEffect(() => {
+    const obj = forms.validate(formData, "price");
+    console.log(obj);
 
-    if(isEditing) {
-      productService.findById(Number(params.productId))
-        .then(response => {
-          const newFormData = forms.updateAll(formData, response.data);
-          setFormData(newFormData);
-        })
-
+    if (isEditing) {
+      productService.findById(Number(params.productId)).then((response) => {
+        const newFormData = forms.updateAll(formData, response.data);
+        setFormData(newFormData);
+      });
     }
   }, []);
-
-
 
   function handleInputChange(event: any) {
     const value = event.target.value;
@@ -59,11 +60,9 @@ export default function ProductForm() {
     <main>
       <section id="product-form-section" className="dsc-container">
         <div className="dsc-product-form-container">
-
           <form className="dsc-card dsc-form">
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
-
               <div>
                 <FormInput
                   {...formData.name}
@@ -79,15 +78,14 @@ export default function ProductForm() {
                 />
               </div>
               <div>
-              <FormInput
+                <FormInput
                   {...formData.imgUrl}
                   className="dsc-form-control"
                   onChange={handleInputChange}
                 />
               </div>
-
             </div>
-            
+
             <div className="dsc-product-form-buttons">
               <Link to="/admin/products">
                 <button type="reset" className="dsc-btn dsc-btn-white">
