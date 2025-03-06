@@ -1,5 +1,5 @@
 export default function FormInput(props: any) {
-  const { validation, ...inputProps } = props;
+  const { validation: any, ...inputProps } = props;
 
   return <input {...inputProps} />;
 }
