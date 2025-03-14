@@ -1,5 +1,5 @@
 import "./styles.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import FormInput from "../../../components/FormInput";
 import * as forms from "../../../utils/forms";
@@ -12,6 +12,8 @@ import { selectStyles } from "../../../utils/select";
 
 export default function ProductForm() {
   const params = useParams();
+
+  const navigate = useNavigate();
 
   const isEditing = params.productId !== "create";
 
@@ -99,18 +101,30 @@ export default function ProductForm() {
     event.preventDefault();
 
     const formDataValidated = forms.dirtyAndValidateAll(formData);
-    if(forms.hasAnyInvalid(formDataValidated )){
+    if (forms.hasAnyInvalid(formDataValidated)) {
       setFormData(formDataValidated);
       return;
     }
-   // console.log(forms.toValues(formData ));
+
+    const requestBody = forms.toValues(formData);
+    if (isEditing) {
+      requestBody.id = params.productId;
+    }
+
+    const request = isEditing
+      ? productService.updateRequest(requestBody)
+      : productService.insertRequest(requestBody);
+
+    request.then(() => {
+      navigate("/admin/products");
+    });
   }
 
   return (
     <main>
       <section id="product-form-section" className="dsc-container">
         <div className="dsc-product-form-container">
-          <form className="dsc-card dsc-form" onSubmit = {handleSubmit}>
+          <form className="dsc-card dsc-form" onSubmit={handleSubmit}>
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
               <div>
@@ -143,7 +157,7 @@ export default function ProductForm() {
                 <FormSelect
                   {...formData.categories}
                   className="dsc-form-control dsc-form-select-container"
-                  styles = {selectStyles}
+                  styles={selectStyles}
                   options={categories}
                   onChange={(obj: any) => {
                     const newFormData = forms.updateAndValidate(
