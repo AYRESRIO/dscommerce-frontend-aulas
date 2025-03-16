@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useContext, useState } from "react";
 import * as authService from "../../../services/auth-service";
-import * as forms from"../../../utils/forms";
+import * as forms from "../../../utils/forms";
 import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../../utils/context-token";
 import FormInput from "../../../components/FormInput";
@@ -10,6 +10,8 @@ export default function Login() {
   const { setContextTokenPayload } = useContext(ContextToken);
 
   const navigate = useNavigate();
+
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
 
   const [formData, setFormData] = useState<any>({
     username: {
@@ -36,24 +38,35 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    authService.loginRequest(forms.toValues(formData))
+
+    setSubmitResponseFail(false);
+
+    const formDataValidated = forms.dirtyAndValidateAll(formData);
+    if (forms.hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
+    authService
+      .loginRequest(forms.toValues(formData))
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
         setContextTokenPayload(authService.getAccessTokenPayload());
         navigate("/cart");
       })
-      .catch((error) => {
-        console.log("Erro no login", error);
+      .catch(() => {
+        setSubmitResponseFail(true);
       });
   }
 
   function handleInputChange(event: any) {
-      setFormData(forms.updateAndValidate(formData, event.target.name, event.target.value));
-    }
-  
-    function handleTurnDirty(name: string) {
-      setFormData(forms.dirtyAndValidate(formData, name));
-    }
+    setFormData(
+      forms.updateAndValidate(formData, event.target.name, event.target.value)
+    );
+  }
+
+  function handleTurnDirty(name: string) {
+    setFormData(forms.dirtyAndValidate(formData, name));
+  }
 
   return (
     <main>
@@ -69,7 +82,9 @@ export default function Login() {
                   onTurnDirty={handleTurnDirty}
                   onChange={handleInputChange}
                 />
-                <div className="dsc-form-error">{formData.username.message}</div>
+                <div className="dsc-form-error">
+                  {formData.username.message}
+                </div>
               </div>
               <div>
                 <FormInput
@@ -80,6 +95,12 @@ export default function Login() {
                 />
               </div>
             </div>
+
+            {submitResponseFail && (
+              <div className="dsc-form-global-error">
+                Usuário ou senha inválidos
+              </div>
+            )}
 
             <div className="dsc-login-form-buttons dsc-mt20">
               <button type="submit" className="dsc-btn dsc-btn-blue">
