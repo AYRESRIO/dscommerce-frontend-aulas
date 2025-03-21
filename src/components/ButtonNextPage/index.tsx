@@ -1,7 +1,7 @@
 import "./styles.css";
 
 type Props = {
-  onNextPage: Function;
+  onNextPage: () => void;
 };
 
 export default function ButtonNextPage({ onNextPage }: Props) {
