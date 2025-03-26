@@ -1,30 +1,78 @@
-# React + TypeScript + Vite
+# DSCommerce-Frontend-Aulas
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/LICENSE) 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Sobre o projeto
 
-Currently, two official plugins are available:
+https://ayresdscommerce.netlify.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+DSCommerce-Frontend-Aulas é uma aplicação full stack web e mobile construída durante o curso **ReactJS Professional**(Certificado: https://github.com/AYRESRIO/dscommerce-frontend-aulas/tree/main/src/assets/Certificates), na escola  **DEVSUPERIOR** (site da DEVSUPERIOR: https://devsuperior.club).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+A aplicação consiste em um sistema de comércio, onde haverá a área do cliente e a área administrativa. Na área do cliente, o usuário acessa o site e, através da página de catálogo
+filtra o produto desejado, indo para a página de detalhes do produto. Nesta página, clicando em comprar, vai para a página de carrinho. Ao finalizar a compra ele vai para a página de login, onde digitando email e senha poderá efetivar o seu pedido.
+Na área administrativa haverá a página de cadastro, onde o usuário logado poderá: cadastrar, deletar, editar e pesquisar um ou mais produtos. Clicando na tecla novo ou no botão de editar, o usuário acessa um formulário onde, preenche e salva de um ou mais produtos, seja ele novo ou alteração do que já existe.
 
-- Configure the top-level `parserOptions` property like this:
+## Layout mobile
+![Mobile 1](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/LayoutMobile/Cart.png) ![Mobile 2](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/LayoutMobile/Confirmation.png) ![Mobile 3](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/LayoutMobile/Product%20Listing.png)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Layout web
+![Web 1](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/LayoutWeb/Catalog.png).
+
+![Web 2](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/LayoutWeb/ProductCompletListing.png)
+
+## Modelo conceitual
+![Modelo Conceitual](https://github.com/AYRESRIO/dscommerce-frontend-aulas/blob/main/src/assets/ModeloConceitual/Fluxo.png)
+
+# Tecnologias utilizadas
+## Back end
+- Java
+- Spring Boot
+- JPA / Hibernate
+- Maven
+## Front end
+- HTML / CSS / JS / TypeScript
+- ReactJS
+- React Native
+## Implantação em produção
+- Back end: SpringToolSuite4
+- Front end web: Netlify
+- Banco de dados: Postgresql
+
+# Como executar o projeto
+
+## Back end
+Pré-requisitos: Java 11
+
+```bash
+# clonar repositório
+git clone https://github.com/AYRESRIO/dscommerce-frontend-aulas
+
+# entrar na pasta do projeto back end
+cd backend
+
+# executar o projeto
+./mvnw spring-boot:run
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Front end web
+Pré-requisitos: npm / yarn
+
+```bash
+# clonar repositório
+git clone https://github.com/AYRESRIO/dscommerce-frontend-aulas
+
+# entrar na pasta do projeto front end web
+dscommerce-frontend-aulas
+
+# instalar dependências
+yarn install
+
+# executar o projeto
+yarn start
+```
+
+# Autor
+
+Marcio D. Ayres
+
+https://www.linkedin.com/in/marcio-ayres-03258a48
